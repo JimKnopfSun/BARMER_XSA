@@ -97,12 +97,6 @@ predictions <- predict(fit.lda, validation)
 plot_confm <- confusionMatrix(predictions, validation$Species)
 
 #Write to Hadoop
-
-r = getOption("repos")
-r["CRAN"] = "https://cloud.r-project.org"
-options(repos = r)
-
-install.packages("httr", dependencies = TRUE)
 library(httr)
 
 # WebHDFS url
