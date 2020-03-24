@@ -101,7 +101,8 @@ plot_confm <- confusionMatrix(predictions, validation$Species)
 r = getOption("repos")
 r["CRAN"] = "https://cloud.r-project.org"
 options(repos = r)
-if(!require(httr)) install.packages("httr", dependencies = TRUE)
+
+install.packages("httr", dependencies = TRUE)
 library(httr)
 
 # WebHDFS url
