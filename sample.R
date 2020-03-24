@@ -3,7 +3,12 @@ library(caret)
 info = Sys.info()
 
 # attach the iris dataset to the environment
-data(iris)
+#data(iris)
+
+# Read from Hadoop
+uri <- "http://awscdh6-ma.sap.local:9870/webhdfs/v1/tmp/tbr/BARMER/XSA/iris.csv?op=OPEN"
+iris <- read.csv(uri)
+
 # rename the dataset
 dataset <- iris
 
