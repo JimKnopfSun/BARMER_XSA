@@ -99,7 +99,7 @@ plot_confm <- confusionMatrix(predictions, validation$Species)
 ############### Write Results to Hadoop
 ########## Predictions
 library(httr)
-model <- lda
+
 
 # WebHDFS url
 hdfsUri <- "http://awscdh6-ma.sap.local:9870/webhdfs/v1"
@@ -130,6 +130,9 @@ PUT(uriWrite, body = upload_file("my_local_file.csv"))
 
 
 ########## Model
+
+model <- fit.lda$finalModel
+
 # WebHDFS url
 hdfsUri <- "http://awscdh6-ma.sap.local:9870/webhdfs/v1"
 
