@@ -96,13 +96,15 @@ lda_sum <- print(fit.lda)
 predictions <- predict(fit.lda, validation)
 plot_confm <- confusionMatrix(predictions, validation$Species)
 
-#Write to Hadoop
+############### Write Results to Hadoop
+########## Predictions
 library(httr)
+model <- lda
 
 # WebHDFS url
 hdfsUri <- "http://awscdh6-ma.sap.local:9870/webhdfs/v1"
-
 # Path to the file to write
+
 fileUri <- "/tmp/tbr/BARMER/XSA/pred.csv"
 
 # OPEN => read a file
@@ -124,3 +126,33 @@ uriWrite <- response$url
 
 # Upload the file with a PUT request
 PUT(uriWrite, body = upload_file("my_local_file.csv"))
+
+
+
+########## Model
+# WebHDFS url
+hdfsUri <- "http://awscdh6-ma.sap.local:9870/webhdfs/v1"
+
+# Path to the file to write
+fileUri <- "/tmp/tbr/BARMER/XSA/model.Rdata"
+
+# OPEN => read a file
+writeParameter <- "?op=CREATE"
+
+# Optional parameter, with the format &name1=value1&name2=value2
+optionnalParameters <- "&overwrite=true"
+
+# Concatenate parameters
+uri <- paste0(hdfsUri, fileUri, writeParameter, optionnalParameters)
+
+#create local copy of model
+save(model, file="temp_model.Rdata")
+
+# Ask the namenode on which datanode to write the file
+response <- PUT(uri)
+
+# Get the url of the datanode returned by hdfs
+uriWrite <- response$url
+
+# Upload the file with a PUT request
+PUT(uriWrite, body = upload_file("temp_model.Rdata"))
