@@ -5,7 +5,6 @@ import shutil
 
 # Next Round
 print("Hello again")
-print("Hallo Stefan")
 
 # Check if there is data for a prediction
 client_hdfs = InsecureClient('http://awscdh6-ma.sap.local:9870', user='dr.who')
