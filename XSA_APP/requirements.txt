@@ -1,0 +1,4 @@
+rpy2==3.1.0
+git_clone
+hdfs
+hdfs3
